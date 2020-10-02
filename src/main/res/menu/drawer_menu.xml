@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/darkmode"
+        android:title="الوضع الليلي" />
+    <item
+        android:id="@+id/b"
+        android:title="aref" />
+    <item
+        android:id="@+id/c"
+        android:title="aref" />
+    <item
+        android:id="@+id/s"
+        android:title="aref" />
+    <item
+        android:id="@+id/af"
+        android:title="aref" />
+</menu>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MYFinal_Project</string>
+    <string name="title_name">تعرف على كورونا فايروس</string>
+    <string name="title2_name">الاحصائيات العامه لكورونا فايروس</string>
+    <string name="title3_name">الاحصائيات الخاصه للدول</string>
+    <string name="title4_name">مقاطع الفيديو</string>
+    <string name="title5_name">بعض المفاهيم الخاطئه</string>
+</resources>
