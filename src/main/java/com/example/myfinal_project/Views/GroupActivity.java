@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -36,21 +35,49 @@ import java.util.List;
 
 public class GroupActivity extends AppCompatActivity {
 
-
+    /**
+     * auth.
+     */
     private FirebaseAuth auth;
+    /**
+     * database.
+     */
     private FirebaseDatabase database;
+    /**
+     * messagedb.
+     */
     private DatabaseReference messagedb;
+    /**
+     * messageAdapter.
+     */
     private MessageAdapter messageAdapter;
+    /**
+     * u.
+     */
     private User u;
+    /**
+     * messages.
+     */
     private List<Message> messages;
-
+    /**
+     * rvMessage.
+     */
     private RecyclerView rvMessage;
+    /**
+     * edMessage.
+     */
     private EditText edMessage;
+    /**
+     * send.
+     */
     private ImageButton send;
 
 
+    /**
+     * @param savedInstanceState
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
@@ -72,7 +99,7 @@ public class GroupActivity extends AppCompatActivity {
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View view) {
                 if (!TextUtils.isEmpty(edMessage.getText().toString())) {
                     Message message = new Message(edMessage.getText().toString(), u.getName());
 
@@ -86,18 +113,18 @@ public class GroupActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.meun, menu);
         return true;
 
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull final MenuItem item) {
         if (item.getItemId() == R.id.logout) {
             auth.signOut();
             finish();
-            startActivity(new Intent(getApplicationContext() , MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
         }
         return super.onOptionsItemSelected(item);
@@ -111,7 +138,7 @@ public class GroupActivity extends AppCompatActivity {
         u.setEmail(currentuser.getEmail());
         database.getReference("Users").child(currentuser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 u = dataSnapshot.getValue(User.class);
                 assert u != null;
                 u.setUid(currentuser.getUid());
@@ -119,7 +146,7 @@ public class GroupActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull final DatabaseError databaseError) {
 
             }
         });
@@ -127,7 +154,7 @@ public class GroupActivity extends AppCompatActivity {
         messagedb = database.getReference("messages");
         messagedb.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onChildAdded(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 
                 Message message = dataSnapshot.getValue(Message.class);
                 message.setKey(dataSnapshot.getKey());
@@ -137,7 +164,7 @@ public class GroupActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onChildChanged(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 
                 Message message = dataSnapshot.getValue(Message.class);
                 message.setKey(dataSnapshot.getKey());
@@ -157,7 +184,7 @@ public class GroupActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            public void onChildRemoved(@NonNull final DataSnapshot dataSnapshot) {
 
                 Message message = dataSnapshot.getValue(Message.class);
                 message.setKey(dataSnapshot.getKey());
@@ -172,12 +199,12 @@ public class GroupActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            public void onChildMoved(@NonNull final DataSnapshot dataSnapshot, @Nullable final String s) {
 
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull final DatabaseError databaseError) {
 
             }
         });
@@ -192,7 +219,7 @@ public class GroupActivity extends AppCompatActivity {
         messages = new ArrayList<>();
     }
 
-    private void displayMessages(List<Message> messages) {
+    private void displayMessages(final List<Message> messages) {
         rvMessage.setLayoutManager(new LinearLayoutManager(GroupActivity.this));
         messageAdapter = new MessageAdapter(GroupActivity.this, messages, messagedb);
         rvMessage.setAdapter(messageAdapter);
