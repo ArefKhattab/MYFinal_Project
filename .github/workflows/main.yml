@@ -27,7 +27,7 @@ jobs:
         uses: yutailang0119/action-android-lint@v1.0.2
         with:
           # The file path of the XML lint report produced by gradle
-          xml_path: ${{ github.workspace }}/home/runner/work/MYFinal_Project/MYFinal_Project/src/main/res/layout/activity_global_api.xml
+          xml_path: ${{ github.workspace }}app/main/res/layout/activity_global_api.xml
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
